@@ -605,7 +605,7 @@ mv openresty-redis2-nginx-module-* redis2-nginx-module-$ver || exit 1
 
 #################################
 
-ver=0.21
+ver=0.24
 $root/util/get-tarball "https://github.com/openresty/resty-cli/tarball/v$ver" -O resty-cli-$ver.tar.gz || exit 1
 tar -xzf resty-cli-$ver.tar.gz || exit 1
 mv openresty-resty-cli-* resty-cli-$ver || exit 1
@@ -877,8 +877,8 @@ curdir=$PWD
 cd $root/work/ || exit 1
 if [ -d nginx.org ]; then
     cd nginx.org/ || exit 1
-    hg pull || exit 1
-    hg update || exit 1
+    # hg pull || exit 1
+    # hg update || exit 1
     cd ..
 else
     hg clone http://hg.nginx.org/nginx.org || exit 1
@@ -886,6 +886,7 @@ fi
 cd nginx.org/ || exit 1
 hg purge --config extensions.purge= || exit 1
 find xml/en/docs -name 'ngx_http_api_module.xml' -delete
+rm xml/en/docs/njs/*
 $nginx_xml2pod xml/en/docs || exit 1
 cd $curdir || exit 1
 
